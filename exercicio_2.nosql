@@ -1,26 +1,35 @@
 # Nas mesmas buscas do exercício anterior, traga apenas o número do resultado usando o contador
 
+// 1. Contar livros cuja descrição longa contém "java" ou "mobile" (case-insensitive)
+
 db.biblioteca.countDocuments({
-  LongDescription: {
+  longDescription: {
     $regex: /java|mobile/i
   }
 });
 
-
-db.biblioteca.countDocuments({
-  status: { $ne: "PUBLISH" },
-  pageCount: { $lt: 300 }
-});
+// 2. Contar livros que não estão com o status publicado e têm menos de 300 páginas
 
 db.biblioteca.countDocuments({
   $and: [
-    { title: "MongoDB.SQL Server" },
-    { nome: "SQL Server.MongoDB" }
+    { status: { $ne: "PUBLISH" } },
+    { pageCount: { $lt: 300 } }
   ]
 });
 
-db.biblioteca.countDocumentss({
-  ISBN: {
+// 3. Contar livros que contêm as palavras "MongoDB" e "SQL Server" no título
+
+db.biblioteca.countDocuments({
+  $and: [
+    { title: { $regex: /MongoDB/i } },
+    { title: { $regex: /SQL Server/i } }
+  ]
+});
+
+// 4. Contar livros cujo ISBN começa com "18"
+
+db.biblioteca.countDocuments({
+  isbn: {
     $regex: /^18/
   }
 });
